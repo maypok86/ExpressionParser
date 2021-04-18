@@ -11,6 +11,7 @@
         <AssemblyName>ExpressionParser.ParserLibrary</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,6 +39,10 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Mode\Mode.cs" />
+        <Compile Include="Mode\IntMode.cs" />
+        <Compile Include="Mode\LongMode.cs" />
+        <Compile Include="Operation\IGenericExpression.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
