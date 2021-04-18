@@ -55,6 +55,8 @@
         <Compile Include="Operation\Subtract.cs" />
         <Compile Include="Operation\UnaryOperation.cs" />
         <Compile Include="Operation\Variable.cs" />
+        <Compile Include="Parser\ICharSource.cs" />
+        <Compile Include="Parser\StringSource.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
