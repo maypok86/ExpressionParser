@@ -56,6 +56,7 @@
         <Compile Include="Operation\UnaryOperation.cs" />
         <Compile Include="Operation\Variable.cs" />
         <Compile Include="Parser\BaseParser.cs" />
+        <Compile Include="Parser\ExpressionParser.cs" />
         <Compile Include="Parser\ICharSource.cs" />
         <Compile Include="Parser\StringSource.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
