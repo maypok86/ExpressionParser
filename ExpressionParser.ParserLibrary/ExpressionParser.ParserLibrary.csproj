@@ -42,7 +42,9 @@
         <Compile Include="Mode\Mode.cs" />
         <Compile Include="Mode\IntMode.cs" />
         <Compile Include="Mode\LongMode.cs" />
+        <Compile Include="Operation\BinaryOperation.cs" />
         <Compile Include="Operation\IGenericExpression.cs" />
+        <Compile Include="Operation\UnaryOperation.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
