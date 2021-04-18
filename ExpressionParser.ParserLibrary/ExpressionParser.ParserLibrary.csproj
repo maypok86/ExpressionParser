@@ -42,6 +42,7 @@
         <Compile Include="Mode\Mode.cs" />
         <Compile Include="Mode\IntMode.cs" />
         <Compile Include="Mode\LongMode.cs" />
+        <Compile Include="Operation\Abs.cs" />
         <Compile Include="Operation\Add.cs" />
         <Compile Include="Operation\BinaryOperation.cs" />
         <Compile Include="Operation\Const.cs" />
@@ -49,6 +50,8 @@
         <Compile Include="Operation\IGenericExpression.cs" />
         <Compile Include="Operation\Mod.cs" />
         <Compile Include="Operation\Multiply.cs" />
+        <Compile Include="Operation\Negate.cs" />
+        <Compile Include="Operation\Square.cs" />
         <Compile Include="Operation\Subtract.cs" />
         <Compile Include="Operation\UnaryOperation.cs" />
         <Compile Include="Operation\Variable.cs" />
