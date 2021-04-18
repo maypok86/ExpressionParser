@@ -1,21 +1,30 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.ExceptionServices;
 using System.Text;
-using System.Threading;
 using ExpressionParser.ParserLibrary.Operation;
 
 namespace ExpressionParser.ParserLibrary.Parser
 {
+    /// <summary>
+    /// Парсер выражений
+    /// </summary>
+    /// <typeparam name="T">Тип вычислений</typeparam>
     public class ExpressionParser<T> : BaseParser
     {
+
+        #region Приоритеты операций
+
         private static int NextPriority(int priority) => priority + 100;
         private const int MinPriority = 100;
         private static readonly int MultiplyPriority = NextPriority(MinPriority);
         private static readonly int ModPriority = NextPriority(MultiplyPriority);
         private static readonly int ConstPriority = NextPriority(ModPriority);
 
+        #endregion
+
+        /// <summary>
+        /// Словарь списков строковых предствалений бинарных операций
+        /// </summary>
         private static readonly Dictionary<int, List<string>> BinaryOperations = new Dictionary<int, List<string>>
         {
                 {MinPriority, new List<string> {"+", "-"}},
@@ -26,6 +35,9 @@ namespace ExpressionParser.ParserLibrary.Parser
         private delegate IGenericExpression<T>
                 BinaryOperator(IGenericExpression<T> first, IGenericExpression<T> second);
 
+        /// <summary>
+        /// Словарь делегат бинарных операций
+        /// </summary>
         private readonly Dictionary<string, BinaryOperator> _binaryGenerator = new Dictionary<string, BinaryOperator>
         {
                 {"+", (first, second) => new Add<T>(first, second)},
@@ -34,6 +46,12 @@ namespace ExpressionParser.ParserLibrary.Parser
                 {"/", (first, second) => new Divide<T>(first, second)},
                 {"mod", (first, second) => new Mod<T>(first, second)}
         };
+
+        /// <summary>
+        /// Парсить строку в математематическое выражение
+        /// </summary>
+        /// <param name="expression">Строковое представление математического выражения</param>
+        /// <returns>Объектное представление математического выражения</returns>
         public IGenericExpression<T> Parse(string expression)
         {
             Source = new StringSource(expression);
@@ -87,7 +105,9 @@ namespace ExpressionParser.ParserLibrary.Parser
 
             if (Test('-'))
             {
-                return char.IsDigit(Current) ? ParseConst(new StringBuilder("-")) : new Negate<T>(ParseUnaryOperation());
+                return char.IsDigit(Current)
+                        ? ParseConst(new StringBuilder("-"))
+                        : new Negate<T>(ParseUnaryOperation());
             }
 
             if (char.IsDigit(Current))
@@ -96,7 +116,9 @@ namespace ExpressionParser.ParserLibrary.Parser
             }
 
             var token = ParseStringUnaryOperation();
-            return _unaryGenerator.ContainsKey(token) ? _unaryGenerator[token].Invoke(ParseUnaryOperation()) : ParseVariable(token);
+            return _unaryGenerator.ContainsKey(token)
+                    ? _unaryGenerator[token].Invoke(ParseUnaryOperation())
+                    : ParseVariable(token);
         }
 
         private string ParseStringUnaryOperation()
@@ -125,15 +147,9 @@ namespace ExpressionParser.ParserLibrary.Parser
 
         private IGenericExpression<T> ParseConst(StringBuilder sb)
         {
-            CopyNumber(sb);
-            return new Const<T>(sb.ToString());
-        }
-
-        private void CopyNumber(StringBuilder sb)
-        {
             if (!char.IsDigit(Current))
             {
-                return;
+                return null;
             }
 
             if (Test('0'))
@@ -141,10 +157,16 @@ namespace ExpressionParser.ParserLibrary.Parser
                 sb.Append('0');
                 if (char.IsDigit(Current))
                 {
-                    return;
+                    return null;
                 }
             }
 
+            CopyNumber(sb);
+            return new Const<T>(sb.ToString());
+        }
+
+        private void CopyNumber(StringBuilder sb)
+        {
             while (char.IsDigit(Current) || Check('.'))
             {
                 sb.Append(NextChar());
